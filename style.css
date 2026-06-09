@@ -1,0 +1,736 @@
+/* Spenlate Styling */
+
+/* ==========================================
+   1. Theme Variables & Base Setup
+   ========================================== */
+:root {
+    /* Fonts */
+    --font-primary: 'Inter', sans-serif;
+    --font-title: 'Outfit', sans-serif;
+
+    /* Theme: Dark (Default) */
+    --bg-primary: hsl(222, 47%, 9%);
+    --bg-secondary: hsl(223, 47%, 14%);
+    --bg-card: rgba(23, 31, 48, 0.7);
+    --bg-card-hover: rgba(23, 31, 48, 0.8);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-focus: rgba(99, 102, 241, 0.5);
+    
+    --text-primary: hsl(210, 40%, 98%);
+    --text-secondary: hsl(215, 20%, 65%);
+    --text-muted: hsl(215, 16%, 47%);
+    
+    --accent-color: hsl(250, 85%, 65%);
+    --accent-gradient: linear-gradient(135deg, hsl(250, 85%, 65%) 0%, hsl(280, 80%, 60%) 100%);
+    --accent-glow: rgba(139, 92, 246, 0.25);
+    
+    --danger-color: hsl(350, 80%, 60%);
+    --danger-hover: hsl(350, 80%, 50%);
+    --danger-bg-glow: rgba(239, 68, 68, 0.15);
+    
+    --success-color: hsl(142, 70%, 45%);
+    --success-bg-glow: rgba(34, 197, 94, 0.15);
+    
+    --warning-color: hsl(38, 92%, 50%);
+    
+    --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    --glass-blur: 20px;
+    --transition-speed: 0.25s;
+}
+
+[data-theme="light"] {
+    /* Theme: Light */
+    --bg-primary: hsl(220, 25%, 97%);
+    --bg-secondary: hsl(220, 20%, 93%);
+    --bg-card: rgba(255, 255, 255, 0.75);
+    --bg-card-hover: rgba(255, 255, 255, 0.85);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-focus: rgba(99, 102, 241, 0.6);
+    
+    --text-primary: hsl(222, 47%, 15%);
+    --text-secondary: hsl(215, 16%, 42%);
+    --text-muted: hsl(215, 12%, 58%);
+    
+    --accent-color: hsl(250, 85%, 60%);
+    --accent-gradient: linear-gradient(135deg, hsl(250, 85%, 60%) 0%, hsl(280, 80%, 55%) 100%);
+    --accent-glow: rgba(139, 92, 246, 0.15);
+    
+    --danger-color: hsl(350, 80%, 55%);
+    --danger-hover: hsl(350, 80%, 45%);
+    --danger-bg-glow: rgba(239, 68, 68, 0.08);
+    
+    --success-color: hsl(142, 70%, 40%);
+    --success-bg-glow: rgba(34, 197, 94, 0.08);
+    
+    --warning-color: hsl(38, 92%, 45%);
+    
+    --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+    --glass-blur: 25px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-x: hidden;
+    position: relative;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+/* ==========================================
+   2. Background Orbs & Effects
+   ========================================== */
+.glass-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-size: cover;
+    pointer-events: none;
+}
+
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.12;
+    z-index: -1;
+    pointer-events: none;
+    transition: transform 1.5s ease-in-out, opacity 1s ease;
+}
+
+.orb-1 {
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+}
+
+.orb-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 45vw;
+    height: 45vw;
+    background: radial-gradient(circle, hsl(320, 80%, 60%) 0%, transparent 70%);
+}
+
+[data-theme="light"] .glow-orb {
+    opacity: 0.06;
+}
+
+/* ==========================================
+   3. Container & General Typography
+   ========================================== */
+.container {
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-title);
+    font-weight: 700;
+}
+
+/* ==========================================
+   4. App Header
+   ========================================== */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon-wrapper {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--accent-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.logo-icon {
+    color: white;
+    width: 24px;
+    height: 24px;
+}
+
+.app-header h1 {
+    font-size: 1.8rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.app-header h1 span {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+/* Theme Toggle Button */
+.btn-icon {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed) ease;
+}
+
+.btn-icon:hover {
+    background: var(--border-color);
+    transform: translateY(-2px);
+}
+
+.btn-icon:active {
+    transform: translateY(0);
+}
+
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+[data-theme="light"] .sun-icon { display: none; }
+[data-theme="light"] .moon-icon { display: block; }
+
+/* ==========================================
+   5. Grid Layout & Cards
+   ========================================== */
+.app-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+}
+
+@media (min-width: 992px) {
+    .app-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
+
+.card {
+    background: var(--bg-card);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    border-color: rgba(99, 102, 241, 0.15);
+}
+
+/* Card Header */
+.card-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.step-badge {
+    width: 24px;
+    height: 24px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.card-header h2 {
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* ==========================================
+   6. Dropdowns / Select wrapper
+   ========================================== */
+.select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.select-icon {
+    position: absolute;
+    left: 12px;
+    width: 16px;
+    height: 16px;
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.5rem 2.25rem 0.5rem 2.25rem;
+    font-size: 0.85rem;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    width: auto;
+}
+
+select:hover {
+    border-color: var(--text-secondary);
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--border-focus);
+}
+
+/* Custom indicator arrow for select */
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid var(--text-secondary);
+    pointer-events: none;
+}
+
+/* ==========================================
+   7. Status Badges
+   ========================================== */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.status-ready {
+    background-color: var(--border-color);
+    color: var(--text-secondary);
+}
+.status-ready .status-dot {
+    background-color: var(--text-muted);
+}
+
+.status-recording {
+    background-color: var(--danger-bg-glow);
+    color: var(--danger-color);
+    border-color: rgba(239, 68, 68, 0.2);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+.status-recording .status-dot {
+    background-color: var(--danger-color);
+}
+
+.status-success {
+    background-color: var(--success-bg-glow);
+    color: var(--success-color);
+    border-color: rgba(34, 197, 94, 0.2);
+}
+.status-success .status-dot {
+    background-color: var(--success-color);
+}
+
+/* ==========================================
+   8. Textarea Container & Animations
+   ========================================== */
+.textarea-container {
+    position: relative;
+    flex-grow: 1;
+    min-height: 320px;
+    display: flex;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    background: transparent;
+    border: none;
+    resize: none;
+    padding: 1.5rem;
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    line-height: 1.6;
+    outline: none;
+}
+
+textarea::placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Waveform Visualizer Overlay */
+.waveform-overlay {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 48px;
+    background: rgba(13, 18, 30, 0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(0);
+}
+
+.waveform-overlay.hidden {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+}
+
+.wave-bar {
+    width: 4px;
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: 4px;
+    transform-origin: bottom;
+    animation: wave 1.2s ease-in-out infinite alternate;
+}
+
+.wave-bar:nth-child(2) { animation-delay: 0.15s; height: 70%; }
+.wave-bar:nth-child(3) { animation-delay: 0.3s; height: 90%; }
+.wave-bar:nth-child(4) { animation-delay: 0.45s; height: 50%; }
+.wave-bar:nth-child(5) { animation-delay: 0.6s; height: 85%; }
+.wave-bar:nth-child(6) { animation-delay: 0.75s; height: 60%; }
+.wave-bar:nth-child(7) { animation-delay: 0.9s; height: 40%; }
+.wave-bar:nth-child(8) { animation-delay: 1.05s; height: 75%; }
+
+@keyframes wave {
+    0% {
+        transform: scaleY(0.15);
+    }
+    100% {
+        transform: scaleY(1.0);
+    }
+}
+
+/* Loader Overlay for Translation */
+.loader-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 18, 30, 0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.loader-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid var(--accent-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loader-overlay p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   9. Action Bars & Buttons
+   ========================================== */
+.card-actions {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    background: rgba(13, 18, 30, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actions-right {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Base button styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    border: 1px solid transparent;
+}
+
+.btn-icon-left {
+    margin-right: 0.5rem;
+    width: 18px;
+    height: 18px;
+}
+
+/* Primary Record Button */
+.btn-primary {
+    background: var(--accent-gradient);
+    color: white;
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--accent-glow);
+    filter: brightness(1.1);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Recording active button state */
+.btn-primary.recording {
+    background: linear-gradient(135deg, var(--danger-color) 0%, hsl(350, 70%, 45%) 100%);
+    box-shadow: 0 4px 15px var(--danger-bg-glow);
+}
+
+.btn-primary.recording:hover {
+    box-shadow: 0 6px 20px var(--danger-bg-glow);
+}
+
+/* Secondary Actions (Translate, etc.) */
+.btn-secondary {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--border-color);
+    transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* Small square/icon buttons (Copy, Clear, Audio Playback) */
+.btn-action {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed) ease;
+}
+
+.btn-action i {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.btn-action:hover:not(:disabled) {
+    background: var(--border-color);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+.btn-action:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn-action:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-action-danger:hover:not(:disabled) {
+    color: var(--danger-color);
+    background-color: var(--danger-bg-glow);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+/* Visual Success indicator for Copy trigger */
+.btn-action.success-action {
+    background-color: var(--success-bg-glow);
+    color: var(--success-color);
+    border-color: rgba(34, 197, 94, 0.2);
+}
+
+/* ==========================================
+   10. Card Footer Stats
+   ========================================== */
+.card-footer {
+    padding: 0.75rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.stats {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.divider {
+    color: var(--border-color);
+}
+
+/* ==========================================
+   11. Footer Section
+   ========================================== */
+.app-footer {
+    text-align: center;
+    padding: 1.5rem 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 2rem;
+}
+
+/* ==========================================
+   12. Utilities & Helper Classes
+   ========================================== */
+.hidden {
+    display: none !important;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}

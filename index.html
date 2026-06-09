@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spenlate — Speech-to-Text & Translation Studio</title>
+    <meta name="description" content="A premium speech-to-text, editing, and translation tool built using vanilla HTML, CSS, and JS. Record, translate, playback, and export text easily.">
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="logo-icon-wrapper">
+                    <i data-lucide="mic" class="logo-icon"></i>
+                </div>
+                <div>
+                    <h1>Spen<span>late</span></h1>
+                    <p class="subtitle">Speech-to-Text & Translation Studio</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+                    <i data-lucide="sun" class="sun-icon"></i>
+                    <i data-lucide="moon" class="moon-icon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="app-grid">
+            
+            <!-- Left Card: Speech Input / Transcription -->
+            <section class="card card-transcribe" aria-labelledby="transcribe-heading">
+                <div class="card-header">
+                    <div class="header-left">
+                        <span class="step-badge">1</span>
+                        <h2 id="transcribe-heading">Transcription</h2>
+                    </div>
+                    <div class="header-right">
+                        <div class="select-wrapper">
+                            <i data-lucide="languages" class="select-icon"></i>
+                            <select id="speech-lang-select" aria-label="Select speech input language">
+                                <option value="en-US">English (US)</option>
+                                <option value="en-GB">English (UK)</option>
+                                <option value="es-ES">Español (España)</option>
+                                <option value="es-MX">Español (México)</option>
+                                <option value="fr-FR">Français (France)</option>
+                                <option value="de-DE">Deutsch (Deutschland)</option>
+                                <option value="it-IT">Italiano (Italia)</option>
+                                <option value="pt-BR">Português (Brasil)</option>
+                                <option value="pt-PT">Português (Portugal)</option>
+                                <option value="zh-CN">中文 (简体)</option>
+                                <option value="ja-JP">日本語 (日本)</option>
+                                <option value="ko-KR">한국어 (대한민국)</option>
+                                <option value="ru-RU">Русский (Россия)</option>
+                                <option value="hi-IN">हिन्दी (भारत)</option>
+                                <option value="ar-SA">العربية (السعودية)</option>
+                                <option value="tr-TR">Türkçe (Türkiye)</option>
+                            </select>
+                        </div>
+                        <div id="speech-status" class="status-badge status-ready">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Ready</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Textarea Editor for Transcription -->
+                <div class="textarea-container">
+                    <textarea id="speech-text" placeholder="Click the microphone to start recording or type something here..."></textarea>
+                    
+                    <!-- Waveform Visualizer overlay when recording -->
+                    <div id="waveform" class="waveform-overlay hidden">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                </div>
+
+                <!-- Card Actions -->
+                <div class="card-actions">
+                    <div class="actions-left">
+                        <button id="record-btn" class="btn btn-primary" title="Start Recording">
+                            <i data-lucide="mic" class="btn-icon-left icon-mic"></i>
+                            <i data-lucide="square" class="btn-icon-left icon-stop hidden"></i>
+                            <span class="record-btn-text">Record</span>
+                        </button>
+                    </div>
+                    <div class="actions-right">
+                        <button id="speak-speech-btn" class="btn-action" title="Speak Text (Text-to-Speech)">
+                            <i data-lucide="volume-2"></i>
+                        </button>
+                        <button id="copy-speech-btn" class="btn-action" title="Copy to Clipboard">
+                            <i data-lucide="copy"></i>
+                        </button>
+                        <button id="download-speech-btn" class="btn-action" title="Download Text (.txt)">
+                            <i data-lucide="download"></i>
+                        </button>
+                        <button id="clear-speech-btn" class="btn-action btn-action-danger" title="Clear All">
+                            <i data-lucide="trash-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card Footer Info -->
+                <div class="card-footer">
+                    <div class="stats">
+                        <span id="speech-word-count">0 words</span>
+                        <span class="divider">•</span>
+                        <span id="speech-char-count">0 characters</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Card: Translation Workspace -->
+            <section class="card card-translate" aria-labelledby="translate-heading">
+                <div class="card-header">
+                    <div class="header-left">
+                        <span class="step-badge">2</span>
+                        <h2 id="translate-heading">Translation</h2>
+                    </div>
+                    <div class="header-right">
+                        <div class="select-wrapper">
+                            <i data-lucide="globe" class="select-icon"></i>
+                            <select id="target-lang-select" aria-label="Select target language for translation">
+                                <option value="es" selected>Español (Spanish)</option>
+                                <option value="en">English (English)</option>
+                                <option value="fr">Français (French)</option>
+                                <option value="de">Deutsch (German)</option>
+                                <option value="it">Italiano (Italian)</option>
+                                <option value="pt">Português (Portuguese)</option>
+                                <option value="zh">中文 (Chinese)</option>
+                                <option value="ja">日本語 (Japanese)</option>
+                                <option value="ko">한국어 (Korean)</option>
+                                <option value="ru">Русский (Russian)</option>
+                                <option value="hi">हिन्दी (Hindi)</option>
+                                <option value="ar">العربية (Arabic)</option>
+                                <option value="tr">Türkçe (Turkish)</option>
+                                <option value="nl">Nederlands (Dutch)</option>
+                                <option value="sv">Svenska (Swedish)</option>
+                                <option value="pl">Polski (Polish)</option>
+                            </select>
+                        </div>
+                        <button id="translate-btn" class="btn btn-secondary">
+                            <i data-lucide="arrow-right-left" class="btn-icon-left"></i>
+                            <span>Translate</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Textarea for Translation -->
+                <div class="textarea-container">
+                    <textarea id="translated-text" placeholder="Translated text will appear here..."></textarea>
+                    
+                    <!-- Loading Spinner Overlay -->
+                    <div id="translation-loader" class="loader-overlay hidden">
+                        <div class="spinner"></div>
+                        <p>Translating text...</p>
+                    </div>
+                </div>
+
+                <!-- Card Actions -->
+                <div class="card-actions">
+                    <div class="actions-left">
+                        <!-- Space holder or info status -->
+                        <div id="translation-status" class="status-badge status-ready">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Ready</span>
+                        </div>
+                    </div>
+                    <div class="actions-right">
+                        <button id="speak-translation-btn" class="btn-action" title="Speak Translation (Text-to-Speech)" disabled>
+                            <i data-lucide="volume-2"></i>
+                        </button>
+                        <button id="copy-translation-btn" class="btn-action" title="Copy Translation" disabled>
+                            <i data-lucide="copy"></i>
+                        </button>
+                        <button id="download-translation-btn" class="btn-action" title="Download Translation (.txt)" disabled>
+                            <i data-lucide="download"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card Footer Info -->
+                <div class="card-footer">
+                    <div class="stats">
+                        <span id="trans-word-count">0 words</span>
+                        <span class="divider">•</span>
+                        <span id="trans-char-count">0 characters</span>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer Section -->
+        <footer class="app-footer">
+            <p>Designed with premium aesthetics &bull; Powered by Web Speech & MyMemory APIs</p>
+        </footer>
+    </div>
+
+    <!-- Main JS Application -->
+    <script src="app.js"></script>
+</body>
+</html>
